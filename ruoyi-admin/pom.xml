@@ -37,7 +37,7 @@
             <version>1.6.2</version>
         </dependency>
 
-         <!-- Mysql驱动包 -->
+        <!-- Mysql驱动包 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -61,20 +61,24 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
-        <!-- 测试模块-->
+<!--        物料管理-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-test</artifactId>
+            <artifactId>ruoyi-material</artifactId>
         </dependency>
+
+<!--        库存管理-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-inventory</artifactId>
+            <version>3.7.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+
+
+
+
+
 
 
     </dependencies>

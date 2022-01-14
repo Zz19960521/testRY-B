@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.material.mapper.MesMaterialMapper">
+    
+    <resultMap type="MesMaterial" id="MesMaterialResult">
+        <result property="materialId"    column="material_id"    />
+        <result property="materialName"    column="material_name"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="materialSpecifications"    column="material_specifications"    />
+        <result property="materialRemark"    column="material_remark"    />
+    </resultMap>
+
+    <sql id="selectMesMaterialVo">
+        select material_id, material_name, material_unit, material_specifications, material_remark from mes_material
+    </sql>
+
+    <select id="selectMesMaterialList" parameterType="MesMaterial" resultMap="MesMaterialResult">
+        <include refid="selectMesMaterialVo"/>
+        <where>  
+            <if test="materialName != null  and materialName != ''"> and material_name like concat('%', #{materialName}, '%')</if>
+            <if test="materialUnit != null  and materialUnit != ''"> and material_unit = #{materialUnit}</if>
+            <if test="materialSpecifications != null  and materialSpecifications != ''"> and material_specifications = #{materialSpecifications}</if>
+            <if test="materialRemark != null  and materialRemark != ''"> and material_remark = #{materialRemark}</if>
+        </where>
+    </select>
+    
+    <select id="selectMesMaterialByMaterialId" parameterType="Long" resultMap="MesMaterialResult">
+        <include refid="selectMesMaterialVo"/>
+        where material_id = #{materialId}
+    </select>
+        
+    <insert id="insertMesMaterial" parameterType="MesMaterial" useGeneratedKeys="true" keyProperty="materialId">
+        insert into mes_material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialName != null">material_name,</if>
+            <if test="materialUnit != null">material_unit,</if>
+            <if test="materialSpecifications != null">material_specifications,</if>
+            <if test="materialRemark != null">material_remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialName != null">#{materialName},</if>
+            <if test="materialUnit != null">#{materialUnit},</if>
+            <if test="materialSpecifications != null">#{materialSpecifications},</if>
+            <if test="materialRemark != null">#{materialRemark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMesMaterial" parameterType="MesMaterial">
+        update mes_material
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialName != null">material_name = #{materialName},</if>
+            <if test="materialUnit != null">material_unit = #{materialUnit},</if>
+            <if test="materialSpecifications != null">material_specifications = #{materialSpecifications},</if>
+            <if test="materialRemark != null">material_remark = #{materialRemark},</if>
+        </trim>
+        where material_id = #{materialId}
+    </update>
+
+    <delete id="deleteMesMaterialByMaterialId" parameterType="Long">
+        delete from mes_material where material_id = #{materialId}
+    </delete>
+
+    <delete id="deleteMesMaterialByMaterialIds" parameterType="String">
+        delete from mes_material where material_id in 
+        <foreach item="materialId" collection="array" open="(" separator="," close=")">
+            #{materialId}
+        </foreach>
+    </delete>
+</mapper>
